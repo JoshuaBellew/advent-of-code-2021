@@ -1,6 +1,7 @@
+const {assert}=require('console');
 const fs = require('fs');
 
-const data = fs.readFileSync('./input.txt', 'utf8').trim().split('\n')
+const diagnosticReport = fs.readFileSync('./input.txt', 'utf8').trim().split('\n')
 
 class Position {
   constructor() {
@@ -36,11 +37,11 @@ const getCurrentPosition = (index) => {
   }
 }
 
-for (const array of data) {
-  for (let i=0; i<array.length; i++) {
+for (const binaryString of diagnosticReport) {
+  for (let i=0; i<binaryString.length; i++) {
     const currentPosition = getCurrentPosition(i);
     
-    currentPosition.incrementPosition(array[i]);
+    currentPosition.incrementPosition(binaryString[i]);
   }
 }
 
@@ -54,10 +55,11 @@ for (const pos of totalPositions) {
   epsilonRate += pos.leastCommonBit();
 }
 
-const gammaNum = parseInt(gammaRate, 2);
-const epsilonNum = parseInt(epsilonRate, 2);
+const gammaRateNum = parseInt(gammaRate, 2);
+const epsilonRateNum = parseInt(epsilonRate, 2);
 
-const powerConsumption = gammaNum * epsilonNum;
+const powerConsumption = gammaRateNum * epsilonRateNum;
+assert(powerConsumption === 3242606);
 console.log(powerConsumption);
 /*
 Gamma rate: 101111001110
