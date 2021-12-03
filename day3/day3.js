@@ -57,14 +57,8 @@ for (const pos of totalPositions) {
 const gammaNum = parseInt(gammaRate, 2);
 const epsilonNum = parseInt(epsilonRate, 2);
 
-// console.log(`\nGamma rate: ${gammaRate}`);
-// console.log(`Gamma number ${gammaNum}`);
-
-// console.log(`Epsilon rate: ${epsilonRate}`);
-// console.log(`Epsilon number ${epsilonNum}`);
-
 const powerConsumption = gammaNum * epsilonNum;
-
+console.log(powerConsumption);
 /*
 Gamma rate: 101111001110
 Gamma number 3022
@@ -72,5 +66,3 @@ Epsilon rate: 010000110001
 Epsilon number 1073
 Total power: 3242606
 */
-
-// console.log(`Total power: ${powerConsumption}`);
