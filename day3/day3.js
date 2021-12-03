@@ -1,5 +1,6 @@
 const {assert}=require('console');
 const fs = require('fs');
+const {CLIENT_RENEG_LIMIT}=require('tls');
 
 const diagnosticReport = fs.readFileSync('./input.txt', 'utf8').trim().split('\n')
 
@@ -26,6 +27,16 @@ class Position {
   }
 }
 
+function countNumberOfBits() {
+  for(const binaryString of diagnosticReport) {
+    for(let i=0;i<binaryString.length;i++) {
+      const currentPosition=getCurrentPosition(i);
+
+      currentPosition.incrementPosition(binaryString[i]);
+    }
+  }
+}
+
 const totalPositions = [];
 
 const getCurrentPosition = (index) => {
@@ -37,30 +48,30 @@ const getCurrentPosition = (index) => {
   }
 }
 
-for (const binaryString of diagnosticReport) {
-  for (let i=0; i<binaryString.length; i++) {
-    const currentPosition = getCurrentPosition(i);
-    
-    currentPosition.incrementPosition(binaryString[i]);
+countNumberOfBits();
+
+const tally = tallyNumberOfBits();
+
+function tallyNumberOfBits() {
+  let gammaRate = '';
+  let epsilonRate = '';
+  for(const pos of totalPositions) {
+    gammaRate+=pos.mostCommonBit();
+    epsilonRate+=pos.leastCommonBit();
   }
+  
+  return { gammaRate, epsilonRate }
 }
 
-// console.log(totalPositions);
-
-let gammaRate = '';
-let epsilonRate = '';
-
-for (const pos of totalPositions) {
-  gammaRate += pos.mostCommonBit();
-  epsilonRate += pos.leastCommonBit();
+function getGammaRateForPosition(position) {
+  return position.mostCommonBit()
 }
-
-const gammaRateNum = parseInt(gammaRate, 2);
-const epsilonRateNum = parseInt(epsilonRate, 2);
+const gammaRateNum = parseInt(tally.gammaRate, 2);
+const epsilonRateNum = parseInt(tally.epsilonRate, 2);
 
 const powerConsumption = gammaRateNum * epsilonRateNum;
 assert(powerConsumption === 3242606);
-console.log(powerConsumption);
+// console.log(powerConsumption);
 /*
 Gamma rate: 101111001110
 Gamma number 3022
