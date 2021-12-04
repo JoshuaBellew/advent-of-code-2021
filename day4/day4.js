@@ -42,15 +42,20 @@ class Board {
     for (const eachCombination of this.allCombinations) {
       let result = eachCombination.every((x) => calledMoves.includes(x));
       if (result === true) {
-        console.log("WINNER");
-        winner = { winner: this, combination: eachCombination }
+        // break
+        if (allGameBoards.length === 1) {
+          console.log("WINNER");
+          winner = { winner: this, combination: eachCombination }
+          break
+        }
+        allGameBoards = allGameBoards.filter((x) => x !== this);
+        console.log("board has won, being removed...", allGameBoards.length);
       }
     }
   }
 }
 
-const allGameBoards = createBoardData(data);
-console.log(allGameBoards);
+let allGameBoards = createBoardData(data);
 function createBoardData(data) {
   let tidyData = data.slice(1);
   tidyData = tidyData.filter((input) => input != '');
@@ -91,9 +96,10 @@ function startGame() {
       }
     }
   }
+  let lastCalledMove = calledMoves[calledMoves.length-1];
   let sum = unmarked.reduce((prev, current) => prev + current);
-  console.log(calledMoves);
-  console.log(unmarked, sum);
+  console.log(unmarked);
+  console.log(sum * lastCalledMove);
 }
 // Part 1 answer 39902
 startGame();
