@@ -4,7 +4,9 @@ const data = fs.readFileSync('./day4.txt', 'utf8').trim().split('\n');
 
 let moves = data.slice(0, 1);
 moves = (moves[0].split(',')).map(x => Number(x));
+
 const calledMoves = [];
+
 class Board {
   constructor(arrayOfStrings) {
     this.board = this.createBoard(arrayOfStrings);
@@ -62,7 +64,6 @@ function createBoardData(data) {
   const boards = [];
   while (tidyData.length > 0) {
     boards.push(new Board(tidyData.splice(0, 5)));
-    tidyData.splice(0, 5);
   }
   return boards;
 }
